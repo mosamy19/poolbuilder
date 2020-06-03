@@ -1,0 +1,90 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="secondary">
+      <ion-back-button
+        class="font-14-imp"
+        [text]="''"
+        [icon]="'arrow-back-outline'"
+        color="medium"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add a Task</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="taskForm">
+    <ion-grid>
+      <ion-row class="mt-3">
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">
+              Task Title
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input formControlName="Title" required type="text"></ion-input>
+          </ion-item>
+          <div class="error-container mb-2">
+            <ion-text
+            *ngIf="taskForm.controls.Title.errors?.required && taskForm.controls.Title.touched"
+              color="danger"
+            >
+              <small>
+                Task title is required
+              </small>
+            </ion-text>
+            <ion-text
+            *ngIf="taskForm.controls.Title.errors?.maxlength && !taskForm.controls.Title.errors?.required"
+              color="danger"
+            >
+              <small>
+                Task title shouldn't exceed 265 characters.
+              </small>
+            </ion-text>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="stacked">
+              Task Description
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-textarea
+              formControlName="Description"
+              required
+              type="text"
+            ></ion-textarea>
+          </ion-item>
+          <div class="error-container mb-5">
+            <ion-text
+              color="danger"
+              *ngIf="taskForm.controls.Description.errors?.required && taskForm.controls.Description.touched"
+            >
+              <small>
+                Task description is required
+              </small>
+            </ion-text>
+            <ion-text
+            *ngIf="taskForm.controls.Description.errors?.maxlength && !taskForm.controls.Description.errors?.required"
+              color="danger"
+            >
+              <small>
+                Task description shouldn't exceed 4000 characters.
+              </small>
+            </ion-text>
+          </div>
+        </ion-col>
+        <ion-col size="8" offset="2">
+          <ion-button (click)="submit()" [disabled]="waitingResonse" class="w-100">
+            <ion-spinner
+                *ngIf="waitingResonse"
+                class="mr-2 btn-spinner"
+                name="crescent"
+              ></ion-spinner>
+            Add Task
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

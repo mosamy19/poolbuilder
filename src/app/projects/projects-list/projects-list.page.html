@@ -1,0 +1,76 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="secondary">
+     <ion-button class="menu-btn">
+       <ion-menu-toggle>
+         <img src="assets/images/menu-icon.svg" alt="">
+     </ion-menu-toggle>
+     </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button class="font-14-imp" routerLink="/add-project">
+        <ion-icon class="font-20-imp" slot="icon-only" name="add"></ion-icon>
+        Add Project
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Projects</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row style="height: calc(100vh - 60px);" *ngIf="!isLoaded">
+      <ion-col class="mt-auto mb-auto">
+        <ion-item lines="none" class="mt-auto mb-auto">
+          <ion-label color="primary" class="ion-text-center">
+            <ion-spinner class="screen-spinner" name="crescent"></ion-spinner>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row  *ngIf="isLoaded">
+      <ion-col size="12" *ngIf="!projectsArr.length" class="ion-text-center ion-padding">
+        <ion-text>
+          No Projects Available
+        </ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-card *ngFor="let project of projectsArr;" (click)="goToProjectDetails(project.Id)">
+          <ion-card-header>
+            <ion-item lines="none" class="mb-2">
+              <ion-avatar slot="start">
+                <img
+                  [src]="hostUrl +project.CreatorImagePath + project.CreatorImageName"
+                  onerror="this.src='assets/images/default-user-img.svg'"
+                />
+              </ion-avatar>
+              <ion-label>{{project.CreatorName}}</ion-label>
+            </ion-item> 
+            <ion-card-title class="font-20-imp mb-2">
+              {{project.Name}}
+            </ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-item lines="none" class="font-14">
+              <ion-label>
+                {{project.TasksCount}} Tasks
+              </ion-label>
+              <ion-buttons>
+                <ion-button *ngIf="project.CanDelete" (click)="deleteProjectAS($event, project.Id)" color="medium" class="font-14-imp delete-btn">
+                  <fa-icon [icon]="faTrashAlt"></fa-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadProjects($event)" [hidden]="!isLoaded">
+    <ion-infinite-scroll-content
+      loadingSpinner="crescent"
+      loadingText="Loading more tasks...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

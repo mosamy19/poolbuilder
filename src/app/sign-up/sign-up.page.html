@@ -1,0 +1,77 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-title color="primary">Pool Builder <strong>360</strong></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-no-padding">
+    <ion-row style="height: calc(100vh - 54px);">
+      <ion-col class="mt-auto mb-auto" offset="2" size="8">
+        <h1 class="mt-0 ion-text-center w-100 mb-3">
+          Create an Account
+        </h1>
+        <div class="circle mx-auto mb-3">
+          <div class="circle mx-auto">
+            <img class="profile-pic" [src]="ImageUrl" />
+
+            <div class="p-image">
+              <ion-button
+                class="upload-button"
+                (click)="clickHandler()"
+                shape="round"
+                type="button"
+                color="primary"
+              >
+                <fa-icon [icon]="faCamera" class="fa-sm"></fa-icon>
+              </ion-button>
+              <input
+                id="file-upload"
+                type="file"
+                accept="image/*"
+                (change)="imageChange($event, this)"
+              />
+            </div>
+          </div>
+        </div>
+        <form [formGroup]="form">
+          <ion-item>
+            <ion-label position="floating">Full Name</ion-label>
+            <ion-input required formControlName="Name"></ion-input>
+          </ion-item>
+
+          <div class="error-container mb-5">
+            <ion-text
+              color="danger"
+              *ngIf="form.controls.Name.errors?.required && form.controls.Name.touched"
+            >
+              <small>
+                Full name is required
+              </small>
+            </ion-text>
+          </div>
+        </form>
+
+        <ion-item class="mb-5" lines="none">
+          <ion-label class="ion-text-center ion-text-wrap">
+            By creating an account you agree to our Terms of Service and Privacy
+            Policy
+          </ion-label>
+        </ion-item>
+        <ion-button
+          [disabled]="accountSubmitted"
+          type="button"
+          (click)="createAccount()"
+          class="w-100"
+        >
+          <ion-spinner
+            *ngIf="accountSubmitted"
+            class="mr-2 btn-spinner"
+            name="crescent"
+          ></ion-spinner>
+          Create Account
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

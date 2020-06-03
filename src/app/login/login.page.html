@@ -1,0 +1,207 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <div>
+    <h4>
+      firebase recaptcha js
+    </h4>
+    <ion-item>
+      <ion-label>Phone</ion-label>
+      <ion-input type="text" [(ngModel)]="phone"></ion-input>
+    </ion-item>
+    <div id="recaptcha-container"></div>
+    <ion-button (click)="sendWithAppVerifier()">Send</ion-button>
+  
+    <ion-item>
+      <ion-label position="floating">Code</ion-label>
+      <ion-input type="text" [(ngModel)]="code"></ion-input>
+    </ion-item>
+    <ion-button (click)="verifyWithAppVerifier()">Verify</ion-button>
+  </div> -->
+
+  <!-- <div> -->
+
+  <ion-grid class="ion-no-padding">
+    <ion-row style="height: calc(100vh - 54px);">
+      <ion-col class="mt-auto mb-auto">
+        <h1 class="ion-text-center font-30-imp mt-0 mb-5" *ngIf="!isCodeSend">
+          Pool Builder
+          <b>
+            360
+          </b>
+        </h1>
+        <ion-row>
+          <ion-col size="8" offset="2" [hidden]="isCodeSend">
+            <ion-item lines="none" class="mb-2">
+              <ion-label class="ion-text-center ion-text-wrap">
+                Enter Your Phone Number to Login into Your Account
+              </ion-label>
+            </ion-item>
+
+            <div>
+              <ion-item style="width: 20%; display: inline-block;">
+                <ion-label position="floating">Code</ion-label>
+                <ion-input type="tel" [(ngModel)]="countryCode"></ion-input>
+              </ion-item>
+              <ion-item style="width: 80%; display: inline-block;">
+                <ion-label position="floating">Phone Number</ion-label>
+                <ion-input type="number" [(ngModel)]="phone"></ion-input>
+              </ion-item>
+            </div>
+            <div class="error-container mb-2">
+              <ion-text color="danger" *ngIf="invalidPhoneNumer">
+                <small>
+                  Phone number is invalid
+                </small>
+              </ion-text>
+              <ion-text color="danger" *ngIf="errMsg">
+                <small>
+                  {{errMsg}}
+                </small>
+              </ion-text>
+            </div>
+            <div class="mb-5">
+              <!--  style=" transform: scale(0.7); 
+              transform-origin: 0 0;" -->
+              <div
+                data-size="compact"
+                style="
+                  transform: scale(0.95);
+                  -webkit-transform: scale(0.95);
+                  transform-origin: 0 0;
+                  -webkit-transform-origin: 0 0;
+                "
+                id="recaptcha-container"
+              ></div>
+            </div>
+
+            <!-- {{countryCode != '' && phone != ''}} -->
+            <ion-button
+              [disabled]="waitingResonse"
+              class="w-100"
+              (click)="submitPhoneNumber()"
+            >
+              <ion-spinner
+                *ngIf="waitingResonse"
+                class="mr-2 btn-spinner"
+                name="crescent"
+              ></ion-spinner>
+              Login</ion-button
+            >
+          </ion-col>
+          <ion-col size="8" offset="2" *ngIf="isCodeSend && userDataLoaded">
+            <ion-avatar class="mb-2">
+              <img [src]="accountImage" />
+            </ion-avatar>
+            <h2 class="ion-text-center mt-0 mb-5">
+              Welcome <strong>{{accountName}}</strong>!
+            </h2>
+            <ion-item lines="none" class="mb-2">
+              <ion-label class="ion-text-center ion-text-wrap">
+                Please enter the code we sent to your mobile phone
+              </ion-label>
+            </ion-item>
+            <!-- <ion-item>
+              <ion-label position="floating">Code</ion-label>
+              <ion-input type="text" [(ngModel)]="code"></ion-input>
+            </ion-item>
+            <ion-button (click)="verify()">Verify</ion-button> -->
+
+            <!-- <div class="container-fluid"> -->
+            <!-- (ngSubmit)="onSubmit()"  -->
+            <form [formGroup]="form">
+              <!-- <h3>Enter your OTP</h3> -->
+              <!-- <div class="row"> -->
+              <ion-row>
+                <ion-col size="2" *ngFor="let input of formInput;  index as i">
+                  <ion-item class="otp-input">
+                    <ion-input
+                      (focusin)="$event.target.select()"
+                      type="number"
+                      placeholder="*"
+                      #formRow
+                      formControlName="{{input}}"
+                      class="ion-text-center"
+                      maxlength="1"
+                      (keyup)="keyUpEvent($event, i)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <div class="error-container mb-5">
+                  <ion-text color="danger" *ngIf="verifyCodeIncorrect">
+                    <small>
+                      Varification code is incorrect
+                    </small>
+                  </ion-text>
+                </div>
+                <ion-col size="12" class="mb-1">
+                  <!-- (click)="verify()" -->
+                  <ion-button
+                    type="button"
+                    [disabled]="waitingResonse"
+                    (click)="submitVerifyCode()"
+                    class="w-100"
+                  >
+                    <ion-spinner
+                      *ngIf="waitingResonse"
+                      class="mr-2 btn-spinner"
+                      name="crescent"
+                    ></ion-spinner>
+                    Verify</ion-button
+                  >
+                </ion-col>
+                <!-- <ion-col style="display: flex;
+                align-items: center;" size="6">
+                  <ion-progress-bar value=""></ion-progress-bar>
+                </ion-col> -->
+
+                <!-- Resend Code -->
+                <!-- <ion-col size="12">
+                  <ion-item lines="none">
+                    <ion-label class="ion-text-center">
+                      Your code is valid for 
+                      {{resendTimer}}
+                    </ion-label>
+                  </ion-item>
+                  <ion-item lines="none">
+                      <ion-label class="ion-text-center">
+                        <ion-button fill="clear" size="small" (click)='sendWithAppVerifier()' [disabled]="disabeleResendBtn" class="font-14-imp">
+                          Resend code?
+                        </ion-button>
+                      </ion-label>
+                  </ion-item>
+                </ion-col> -->
+                <!-- / Resend Code -->
+              </ion-row>
+            </form>
+            <!-- </div> -->
+          </ion-col>
+          <ion-col
+            size="12"
+            class="mt-auto mb-auto"
+            [hidden]="!(isCodeSend && !userDataLoaded)"
+          >
+            <ion-item lines="none">
+              <ion-label color="primary" class="ion-text-center">
+                <ion-spinner
+                  class="screen-spinner"
+                  name="crescent"
+                ></ion-spinner>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <ion-item>
+      <ion-label position="floating">Code</ion-label>
+      <ion-input type="text" [(ngModel)]="code"></ion-input>
+    </ion-item> -->
+  <!-- <ion-button (click)="verify()">Verify</ion-button> -->
+  <!-- </div> -->
+</ion-content>

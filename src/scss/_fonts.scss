@@ -1,0 +1,13 @@
+@mixin fonts {
+    @for $i from 10 through 40 {
+      .font-#{$i} {
+        font-size: #{$i/16}rem;
+      }
+  
+      .font-#{$i}-imp {
+        font-size: #{$i/16}rem !important;
+      }
+    }
+  }
+  
+  @include fonts;

@@ -1,0 +1,54 @@
+<ion-app>
+  <ion-menu side="start" menuId="first" contentId="content1" *ngIf="isLoggedIn">
+    <!-- <ion-header>
+      <ion-toolbar>
+        <ion-title>Navigate</ion-title>
+      </ion-toolbar>
+    </ion-header> -->
+    <ion-content>
+      <ion-menu-toggle auto-hide="true">
+        <ion-grid class="ion-no-padding">
+          <ion-row style="height: 100vh;">
+            <ion-col class="mt-4" size="12">
+              <ion-avatar class="mb-2">
+                <img
+                onerror="this.src='assets/images/default-user-img.svg'"
+                  [src]="imageUrl"
+                />
+              </ion-avatar>
+              <ion-item lines="none">
+                <ion-label class="ion-text-center font-18-imp">
+                  Welcome <strong>{{UserName}}</strong>!
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col class="mt-auto" size="12">
+              <!-- <ion-list *ngFor="let pages of navigate">
+              <ion-menu-toggle auto-hide="true">
+                <ion-item [routerLink]="pages.url" routerDirection="forward">
+                  {{ pages.title }}
+                </ion-item>
+              </ion-menu-toggle>
+            </ion-list> -->
+
+              <!-- [routerLink]="pages.url" -->
+              <ion-item
+                (click)="logout()"
+                lines="none"
+                class="mb-2 menu-item"
+                routerDirection="forward"
+              >
+                <ion-label>
+                  <fa-icon [icon]="faSignOutAlt" class="fa-lg"></fa-icon>
+                  Logout
+                </ion-label>
+              </ion-item>
+              <!-- </ion-menu-toggle> -->
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-menu-toggle>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="content1"></ion-router-outlet>
+</ion-app>

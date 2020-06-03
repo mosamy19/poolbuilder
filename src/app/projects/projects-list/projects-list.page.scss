@@ -1,0 +1,19 @@
+ion-buttons {
+    ion-button {
+        &.menu-btn {
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            --padding-start: 0;
+            --padding-end: 0;
+
+            ion-menu-toggle {
+                padding-left: .5em;
+                padding-right: .5em;
+                width: 36px;
+                height: 32px;
+                display: flex;
+                vertical-align: middle;
+            }
+        }
+    }
+}

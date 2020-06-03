@@ -1,0 +1,163 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="secondary">
+      <ion-back-button
+        class="font-14-imp"
+        [text]="''"
+        [icon]="'arrow-back-outline'"
+        color="medium"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Task Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #ionContentTemplate>
+  <ion-grid>
+    <ion-row style="height: calc(100vh - 60px);" *ngIf="!isLoaded">
+      <ion-col class="mt-auto mb-auto">
+        <ion-item lines="none" class="mt-auto mb-auto">
+          <ion-label color="primary" class="ion-text-center">
+            <ion-spinner class="screen-spinner" name="crescent"></ion-spinner>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="isLoaded && model.Id">
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-item lines="none" class="mb-2">
+              <ion-avatar slot="start">
+                <img
+                  [src]="creatorImage"
+                />
+              </ion-avatar>
+              <ion-label>{{model.CreatorName}}</ion-label>
+              <ion-buttons>
+                <ion-button color="medium" *ngIf="model.CanDelete"  class="font-14-imp delete-btn" (click)="deleteTaskAS(model.Id)" >
+                  <fa-icon [icon]="faTrashAlt"></fa-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+
+            <ion-card-title class="font-20-imp mb-2">
+              {{model.Title}}
+            </ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <!-- class="mb-1" -->
+            <ion-item lines="none">
+              <ion-label text-wrap>
+              {{model.Description}}
+              </ion-label>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <!-- /Task Details -->
+      <ion-col size="12">
+        <ion-row *ngFor="let comment of comments" >
+          <ion-col *ngIf="comment.UserId == userId" size="10" offset="2">
+            <ion-item lines="none" class="mb-1 user-meta">
+              <ion-avatar slot="start">
+                <img
+                [src]="comment.FullUserImagePath"
+                />
+              </ion-avatar>
+              <ion-label>{{comment.UserName}}
+                <br />
+                <span class="font-12">
+                  {{comment.DateTime | amFromUtc | amTimeAgo}}
+                </span>
+              </ion-label>
+            </ion-item>
+            <ion-card class="current-user-msg">
+              <ion-card-content>
+                <ion-item lines="none" class="mb-1">
+                  <ion-label text-wrap class="font-18-imp">
+                    {{comment.Text}}
+                  </ion-label>
+                </ion-item>
+                <ion-item *ngIf="comment.CanDelete" class="ml-0 mr-0" lines="none">
+                  <ion-buttons class="ml-0 mr-0" slot="end">
+                    <ion-button (click)="deleteCommentAS($event, comment.Id)" color="light" class="font-14-imp delete-btn">
+                      <fa-icon [icon]="faTrashAlt"></fa-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col *ngIf="comment.UserId != userId" size="10">
+            <ion-item lines="none" class="mb-1 user-meta">
+              <ion-avatar slot="start">
+                <img
+                  [src]="comment.FullUserImagePath"
+                />
+              </ion-avatar>
+              <ion-label> 
+                {{comment.UserName}}
+                <br />
+                <span class="font-12">
+                  {{comment.DateTime | amFromUtc | amTimeAgo}}
+                </span>
+              </ion-label>
+            </ion-item>
+            <ion-card>
+              <ion-card-content>
+                <ion-item lines="none" class="mb-1">
+                  <ion-label text-wrap class="font-18-imp">
+                  {{comment.Text}}
+                  </ion-label>
+                </ion-item>
+                <ion-item *ngIf="comment.CanDelete" class="ml-0 mr-0" lines="none">
+                  <ion-buttons class="ml-0 mr-0" slot="end">
+                    <ion-button (click)="deleteCommentAS($event, comment.Id)" color="medium" class="font-14-imp delete-btn">
+                      <fa-icon [icon]="faTrashAlt"></fa-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+            
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadComments($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Loading more comments...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item lines="none">
+          <ion-input  placeholder="Say something…" [(ngModel)]="commentModel.Text" class="msg-input"></ion-input>
+          <ion-buttons class="ion-margin-start">
+            <ion-button
+              color="primary"
+              fill="solid"
+              shape="round"
+              class="submit-msg-btn"
+              [disabled]="addingComment"
+              (click)="addComment()">
+              <ion-spinner
+                *ngIf="addingComment; else btnIcon"
+                class="ml-0 btn-spinner"
+                name="crescent"
+              ></ion-spinner>
+              <ng-template #btnIcon>
+                <fa-icon [icon]="faPaperPlane" class="fa-sm"></fa-icon>
+              </ng-template>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

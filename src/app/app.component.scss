@@ -1,0 +1,26 @@
+ion-menu {
+  ion-content {
+    --background: #fff;
+  }
+  ion-avatar {
+    margin-right: auto;
+    margin-left: auto;
+    width: 60px;
+    height: 60px;
+    border: 1px #E8E8E8 solid;
+  }
+}
+
+.menu-item {
+  --inner-padding-top: 12px;
+  --inner-padding-bottom: 12px;
+  --inner-padding-start: 12px;
+  --inner-padding-end: 12px;
+  ion-label {
+    --color: var(--ion-color-primary);
+  }
+  .ng-fa-icon {
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+}

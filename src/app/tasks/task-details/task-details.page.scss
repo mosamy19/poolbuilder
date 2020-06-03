@@ -1,0 +1,36 @@
+.user-meta {
+  --background: #fafafa;
+  ion-label {
+    line-height: 1.25;
+  }
+}
+
+ion-card {
+  &.current-user-msg {
+    background-color: var(--ion-color-primary);
+    ion-item {
+      --background: var(--ion-color-primary);
+      color: #fff;
+    }
+  }
+}
+
+ion-footer {
+  background-color: #fff;
+  &::before {
+    background-image: none;
+  }
+}
+
+.msg-input {
+  border-radius: 20px;
+  border: 1px #e9e9e9 solid;
+  margin-top: 0px;
+  padding-left: 12px !important;
+}
+
+.submit-msg-btn {
+  height: 40px;
+  width: 40px;
+  --border-radius: 25px;
+}

@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "645752018235",
+    "firebase_url": "https://poolbuilder360-36e7d.firebaseio.com",
+    "project_id": "poolbuilder360-36e7d",
+    "storage_bucket": "poolbuilder360-36e7d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645752018235:android:4a5b7a0651e75d3092531e",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645752018235-52isg5ok6fccc6qs8oqns7je06imgf0g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.ionic.starter",
+            "certificate_hash": "a68cc82f966499558bc1d625151eafbd00e05293"
+          }
+        },
+        {
+          "client_id": "645752018235-qe5n7g2197pcr0dskpmsvcvacgng7i36.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.ionic.starter",
+            "certificate_hash": "030ab5dd9712f81e60d1f52c554ed37d0c8e5bc2"
+          }
+        },
+        {
+          "client_id": "645752018235-j9g4v42ntadiute2ifcc6ni09s604nnd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHNtgrKtvuV1XMTidDVOgor9c9n1MLz-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645752018235-j9g4v42ntadiute2ifcc6ni09s604nnd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

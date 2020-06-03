@@ -1,0 +1,68 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button *ngIf="project.Id" class="font-14-imp" [routerLink]="['/add-task/'+project.Id+'']">
+        <ion-icon class="font-20-imp" slot="icon-only" name="add"></ion-icon>
+        Add Task
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="secondary">
+      <ion-back-button class="font-14-imp" [text]="''" [icon]="'arrow-back-outline'" color="medium"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{project?.Name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row style="height: calc(100vh - 60px);" *ngIf="!isLoaded">
+      <ion-col class="mt-auto mb-auto">
+        <ion-item lines="none" class="mt-auto mb-auto">
+          <ion-label color="primary" class="ion-text-center">
+            <ion-spinner class="screen-spinner" name="crescent"></ion-spinner>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="isLoaded && project.Id">
+      <ion-col size="12" *ngIf="!tasksArr.length" class="ion-text-center ion-padding">
+        <ion-text>
+          No Task Available
+        </ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-card *ngFor="let task of tasksArr;" button="true" (click)="goToTaskDetails(task.Id)">
+          <ion-card-header>
+            <ion-card-title class="font-20-imp mb-2">
+              {{task.Title}}
+            </ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-item lines="none" class="mb-2">
+              <ion-label>
+                {{task.Description}}
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none" class="font-14">
+              <ion-label>
+                {{task.CommentsCount}} Comments
+              </ion-label>
+              <ion-buttons>
+                <ion-button *ngIf="task.CanDelete" (click)="deleteTaskAS($event, task.Id)" color="medium" class="font-14-imp delete-btn">
+                  <fa-icon [icon]="faTrashAlt"></fa-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadTasks($event)" [hidden]="!isLoaded">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Loading more tasks...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

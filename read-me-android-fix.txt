@@ -1,0 +1,16 @@
+app gradle
+-------------------------------
+ implementation 'androidx.multidex:multidex:2.0.0'
+
+ defaultConfig {
+
+        multiDexEnabled true
+    }
+
+---------------------
+allow http on android 
+
+add tages to --> android\app\src\main\res\xml\network_security_config.xml
+       
+ <domain includeSubdomains="true">0.0.0.0</domain>
+ <domain includeSubdomains="true">poolbuilder360api.kreationdev.com</domain> //or your domain name
