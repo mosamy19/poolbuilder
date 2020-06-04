@@ -54,6 +54,10 @@ ion-content {
   --background: #fafafa;
 }
 
+ion-header{
+  background-color: #fff;
+}
+
 ion-toolbar {
   --opacity: 0.6;
   --background-color: #fafafa;
@@ -67,6 +71,7 @@ ion-title {
   padding-inline-start: 120px;
   padding-inline-end: 120px;
   font-size: 1rem;
+  font-weight: 500;
 }
 
 ion-item {
@@ -113,6 +118,10 @@ ion-card {
     padding-inline-end: 1rem;
   }
 
+  ion-card-title {
+    font-weight: 500;
+  }
+
   ion-card-content {
     &.card-content-ios {
       padding-inline-start: 1rem;
@@ -153,5 +162,9 @@ ion-spinner {
       width: 24px;
       height: 24px;
       margin-left: -32px;
-  }
+  } 
+}
+
+ion-footer {
+  background-color: #fff;
 }
